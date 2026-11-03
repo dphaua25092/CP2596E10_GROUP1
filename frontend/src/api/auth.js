@@ -1,6 +1,6 @@
 import client from './client'
 
-// Hợp đồng API xác thực, xem mục "Hợp đồng API" trong README gốc
+// Quy ước API xác thực, xem mục "Quy ước API" trong README gốc
 export const login = (credentials) => client.post('/login', credentials).then((res) => res.data)
 
 export const register = (data) => client.post('/register', data).then((res) => res.data)

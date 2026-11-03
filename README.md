@@ -2,10 +2,10 @@
 
 Hệ thống đặt vé xem phim trực tuyến.
 
-| Thư mục | Công nghệ | Chạy tại |
-| --- | --- | --- |
-| [`backend/`](backend) | Laravel 12 – REST API, Sanctum, MariaDB/MySQL (XAMPP) | http://localhost:8000/api |
-| [`frontend/`](frontend) | ReactJS 19 + Vite, React Router, axios | http://localhost:5173 |
+| Thư mục                 | Công nghệ                                             | Chạy tại                  |
+| ----------------------- | ----------------------------------------------------- | ------------------------- |
+| [`backend/`](backend)   | Laravel 12 – REST API, Sanctum, MariaDB/MySQL (XAMPP) | http://localhost:8000/api |
+| [`frontend/`](frontend) | ReactJS 19 + Vite, React Router, axios                | http://localhost:5173     |
 
 ## Yêu cầu
 
@@ -66,35 +66,34 @@ Mỗi trang hiện là khung tạm (`PagePlaceholder`) ghi người phụ trách
 
 ## Phân công theo thư mục
 
-| Thành viên | Frontend (`frontend/src/pages`) | Backend |
-| --- | --- | --- |
+| Thành viên                                  | Frontend (`frontend/src/pages`)                                                                                                                                                               | Backend                                                                          |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | Phước Hậu – Người dùng, đánh giá, thông báo | `auth/*`, `profile/ProfilePage`, `profile/NotificationsPage`, `admin/UsersAdminPage`, `admin/ReviewsAdminPage`, `admin/SeatCategoriesAdminPage`, phần đánh giá trong `movies/MovieDetailPage` | Đăng ký / đăng nhập / quên mật khẩu, hồ sơ, admin, đánh giá, thông báo, hạng ghế |
-| Nguyễn Chí Hùng – Phim & trang chủ | `HomePage`, `movies/*`, `admin/MoviesAdminPage`, `admin/CatalogAdminPage`, `admin/PromotionsAdminPage` | Phim, thể loại, ngôn ngữ, diễn viên / đạo diễn, khuyến mãi, tìm kiếm & lọc |
-| Nguyễn Minh Lý Nhật Quỳnh – Rạp, lịch chiếu | `admin/TheatersAdminPage`, `admin/ShowtimesAdminPage` | Rạp, phòng chiếu, sơ đồ ghế, suất chiếu, giá theo hạng ghế, giá động |
-| Đỗ Nguyễn Phát Tài – Đặt vé, hóa đơn | `theaters/*`, `booking/*`, `profile/BookingHistoryPage`, `admin/DashboardPage`, `admin/BookingsAdminPage`, `admin/CitiesAdminPage` | Đặt vé, thanh toán giả lập, vé điện tử, hóa đơn, báo cáo, thành phố |
+| Nguyễn Chí Hùng – Phim & trang chủ          | `HomePage`, `movies/*`, `admin/MoviesAdminPage`, `admin/CatalogAdminPage`, `admin/PromotionsAdminPage`                                                                                        | Phim, thể loại, ngôn ngữ, diễn viên / đạo diễn, khuyến mãi, tìm kiếm & lọc       |
+| Nguyễn Minh Lý Nhật Quỳnh – Rạp, lịch chiếu | `admin/TheatersAdminPage`, `admin/ShowtimesAdminPage`                                                                                                                                         | Rạp, phòng chiếu, sơ đồ ghế, suất chiếu, giá theo hạng ghế, giá động             |
+| Đỗ Nguyễn Phát Tài – Đặt vé, hóa đơn        | `theaters/*`, `booking/*`, `profile/BookingHistoryPage`, `admin/DashboardPage`, `admin/BookingsAdminPage`, `admin/CitiesAdminPage`                                                            | Đặt vé, thanh toán giả lập, vé điện tử, hóa đơn, báo cáo, thành phố              |
 
-## Hợp đồng API
+## Quy ước API
 
 Quy ước chung cho mọi API:
 
-- Tiền tố `/api`; route quản trị đặt dưới `/api/admin/...`.
+- Tiền tố `/api`, route quản trị đặt dưới `/api/admin/...`.
 - Request gửi header `Authorization: Bearer <token>` (axios client tự gắn).
-- Lỗi luôn trả JSON `{ "message": "..." }`; lỗi validate trả 422 kèm `errors`; chưa đăng nhập trả 401.
-- Ngày trả dạng `YYYY-MM-DD`, ngày giờ trả ISO 8601 (UTC); frontend hiển thị bằng `utils/format.js`.
+- Lỗi luôn trả JSON `{ "message": "..." }`, lỗi validate trả 422 kèm `errors`, chưa đăng nhập trả 401.
+- Ngày trả dạng `YYYY-MM-DD`, ngày giờ trả ISO 8601 (UTC), frontend hiển thị bằng `utils/format.js`.
 
-Frontend đã viết sẵn phần xác thực (`api/auth.js`, `AuthContext`, `LoginPage`) theo hợp đồng dưới đây; backend cần làm đúng như vậy:
+Frontend đã viết sẵn phần xác thực (`api/auth.js`, `AuthContext`, `LoginPage`) theo quy ước dưới đây, backend cần làm đúng như vậy:
 
-| Method | URL | Body | Trả về |
-| --- | --- | --- | --- |
-| POST | `/api/login` | `{ email, password }` | `{ token, user }` |
-| POST | `/api/register` | `{ full_name, email, phone, password, password_confirmation }` | `{ token, user }` |
-| POST | `/api/logout` | – | 204 |
-| GET | `/api/user` | – | `user` (đã có sẵn) |
+| Method | URL             | Body                                                           | Trả về            |
+| ------ | --------------- | -------------------------------------------------------------- | ----------------- |
+| POST   | `/api/login`    | `{ email, password }`                                          | `{ token, user }` |
+| POST   | `/api/register` | `{ full_name, email, phone, password, password_confirmation }` | `{ token, user }` |
+| POST   | `/api/logout`   | –                                                              | 204               |
+| GET    | `/api/user`     | –                                                              | `user`            |
 
 `user` có trường `role` (`customer` / `admin`); frontend dựa vào đó để hiện trang quản trị.
 
 ## Làm việc với git
 
-- Không commit thẳng lên `main`; mỗi người làm trên nhánh riêng (`feature/dat-ve`, `feature/quan-ly-phim`...) rồi tạo Pull Request.
-- Không commit `.env`, `vendor/`, `node_modules/` (đã có trong `.gitignore`).
+- Không commit thẳng lên `main`, mỗi người làm trên nhánh riêng (`feature/dat-ve`, `feature/quan-ly-phim`...) rồi tạo Pull Request.
 - Đổi CSDL: tạo migration mới (`php artisan make:migration ...`), không sửa migration cũ.
