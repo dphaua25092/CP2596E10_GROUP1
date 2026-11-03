@@ -63,18 +63,3 @@ axios.get('http://localhost:8000/api/user', {
 ```
 
 Tạo token cho user: `$user->createToken('react')->plainTextToken`. Lỗi luôn trả JSON; chưa đăng nhập trả `401`.
-
-## Cơ sở dữ liệu
-
-- Migration trong `database/migrations` là nguồn chuẩn của lược đồ; muốn đổi bảng thì tạo migration mới, không sửa migration đã có trên nhánh `main`.
-- Ràng buộc nằm ở CSDL: CHECK, khóa ngoại, trigger chống trùng suất chiếu và kiểm tra ghế hợp lệ (`create_triggers`), view báo cáo (`create_views`).
-- Báo cáo đọc từ view: `DB::table('v_ticket_sales_daily')`, `v_revenue_by_theater`, `v_popular_movies`, `v_user_booking_stats`, `v_booking_totals` (hóa đơn), `v_movie_ratings`, `v_screen_capacity`, `v_theater_capacity`.
-- Bảng `notifications` là bảng riêng của CineBook (model `App\Models\Notification`), không dùng database notification mặc định của Laravel.
-- Tìm kiếm phim / diễn viên dùng `LIKE '%từ khóa%'`; collation bỏ qua dấu nên "bo gia" tìm ra "Bố già".
-
-### Quy tắc code phải tự đảm bảo
-
-1. Mỗi thao tác thêm / sửa / xóa / ẩn của admin phải ghi `admin_logs` (để chặn xóa admin đã có tác vụ).
-2. Trước khi giữ ghế, chuyển đơn `pending` quá `hold_expires_at` sang `expired` và xóa `booking_seats` của đơn `expired` / `failed` / `cancelled`.
-3. Chỉ cho đánh giá khi user có đơn `confirmed` của phim đó và suất đã chiếu xong.
-4. Giá ghế = giá gốc trong `showtime_prices` → áp `pricing_rules` (`PricingRule::priceFor()`) → trừ khuyến mãi đang chạy, chốt vào `booking_seats.price` và `bookings.discount_amount`.
