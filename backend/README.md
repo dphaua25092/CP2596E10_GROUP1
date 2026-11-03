@@ -15,22 +15,12 @@ cp .env.example .env          # Windows: copy .env.example .env
 php artisan key:generate
 ```
 
-Tạo database `cinebook` (utf8mb4_unicode_ci) trong phpMyAdmin, hoặc:
-
-```sql
-CREATE DATABASE cinebook CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-Sau đó tạo bảng và dữ liệu mẫu:
-
 ```bash
 php artisan migrate --seed
 php artisan serve             # http://localhost:8000
 ```
 
 Muốn làm lại dữ liệu từ đầu: `php artisan migrate:fresh --seed`.
-
-Dữ liệu mẫu tính theo ngày chạy seed (phim đang chiếu / sắp chiếu, suất chiếu 14 ngày trước đến 6 ngày tới), nên khi demo nên seed lại cho dữ liệu mới.
 
 ## Tài khoản mẫu
 
@@ -44,15 +34,6 @@ Mật khẩu tất cả: `password`
 | khachhang@cinebook.vn | customer | Có lịch sử đặt vé đã qua và sắp tới |
 | bikhoa@cinebook.vn | customer | Tài khoản bị khóa |
 
-## Cấu hình chính (.env)
-
-| Biến | Giá trị | Ý nghĩa |
-| --- | --- | --- |
-| `DB_CONNECTION` | `mariadb` | MariaDB của XAMPP |
-| `DB_TIMEZONE` | `+07:00` | `NOW()` trong SQL / trigger khớp giờ Việt Nam |
-| `APP_TIMEZONE` | `Asia/Ho_Chi_Minh` | |
-| `FRONTEND_URL` | `http://localhost:5173` | Origin React được phép gọi API (CORS); nhiều origin cách nhau dấu phẩy |
-
 ## Gọi API từ React
 
 ```js
@@ -62,4 +43,4 @@ axios.get('http://localhost:8000/api/user', {
 });
 ```
 
-Tạo token cho user: `$user->createToken('react')->plainTextToken`. Lỗi luôn trả JSON; chưa đăng nhập trả `401`.
+Tạo token cho user: `$user->createToken('react')->plainTextToken`. Lỗi luôn trả JSON, chưa đăng nhập trả `401`.
