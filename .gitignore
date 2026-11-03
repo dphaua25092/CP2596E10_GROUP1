@@ -1,0 +1,6 @@
+# Mỗi project con có .gitignore riêng (backend/.gitignore, frontend/.gitignore)
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

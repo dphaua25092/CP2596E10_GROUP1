@@ -1,0 +1,44 @@
+/* Style chung tối thiểu; nhóm thống nhất thư viện UI rồi thay thế */
+:root {
+  --color-primary: #c0392b;
+  --color-text: #1f2328;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; text-decoration: none; }
+a.active { color: var(--color-primary); font-weight: 600; }
+button { cursor: pointer; font: inherit; }
+input { font: inherit; padding: 8px 10px; border: 1px solid var(--color-border); border-radius: 6px; width: 100%; }
+
+.layout { min-height: 100vh; display: flex; flex-direction: column; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 12px 24px; background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+.header__logo { font-weight: 700; font-size: 1.25rem; color: var(--color-primary); }
+.header__nav { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.main { flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.footer { padding: 16px 24px; text-align: center; color: var(--color-muted); border-top: 1px solid var(--color-border); }
+
+.admin { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+.admin__sidebar { display: flex; flex-direction: column; gap: 16px; padding: 16px; background: var(--color-surface); border-right: 1px solid var(--color-border); }
+.admin__sidebar nav { display: flex; flex-direction: column; gap: 8px; }
+.admin__content { padding: 24px; }
+@media (max-width: 768px) {
+  .admin { grid-template-columns: 1fr; }
+  .admin__sidebar { border-right: 0; border-bottom: 1px solid var(--color-border); }
+}
+
+.auth { max-width: 400px; margin: 0 auto; }
+.auth form { display: flex; flex-direction: column; gap: 12px; }
+.auth label { display: flex; flex-direction: column; gap: 4px; }
+.auth button[type='submit'] { padding: 10px; border: 0; border-radius: 6px; background: var(--color-primary); color: #fff; }
+.error { color: var(--color-primary); margin: 0; }
+
+.placeholder__owner { color: var(--color-muted); }
+.loading { text-align: center; color: var(--color-muted); }
